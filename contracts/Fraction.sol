@@ -13,6 +13,7 @@ contract Fraction {
         address originalAddress;
         uint tokenId;
         uint fractionCount;
+        string tokenURI;
     }
 
     address private openSeaBurnAddress;
@@ -28,7 +29,7 @@ contract Fraction {
 
     event mergeEvent(address indexed sender, address indexed originalNftContract, uint tokenId, address indexed fractionNftContract);
 
-    event fractionaliseEvent(address indexed sender, address indexed originalNftContract, uint tokenId ,uint fractionCount, address indexed fractionNftContract);
+    event fractionaliseEvent(address indexed sender, address indexed originalNftContract, uint tokenId ,uint fractionCount, address indexed fractionNftContract, string tokenURI);
 
     function merge(address fractionAddress, uint tokenId) external {
 
@@ -72,22 +73,24 @@ contract Fraction {
         // string memory symbol = string(bytes.concat(bytes(nftContract.name()), bytes("Fractinalised")));
 
         FractionCreator fractionCollection;
+        string memory tokenURI = nftContract.tokenURI(tokenId);
         
         if(fractionalisedNFTs[_nftContractAddress] == address(0)) {
             //Generate Fractionalised NFT Contract
-            FractionCreator newFractionCollection = new FractionCreator(tokenId, nftContract.tokenURI(tokenId), fractionCount, msg.sender);
+            FractionCreator newFractionCollection = new FractionCreator(tokenId, tokenURI, fractionCount, msg.sender);
             fractionalisedNFTs[_nftContractAddress] = address(newFractionCollection);
             fractionCollection = newFractionCollection;
         } else {
             //Take exising NFT contract and mint new one
             fractionCollection = FractionCreator(fractionalisedNFTs[_nftContractAddress]);
-            fractionCollection.mintFraction(tokenId, nftContract.tokenURI(tokenId), fractionCount, msg.sender);
+            fractionCollection.mintFraction(tokenId, tokenURI, fractionCount, msg.sender);
         }
+
         //Update the fractionDetails mapping
-        fractionDetails[address(fractionCollection)][tokenId] = OriginalNFT(_nftContractAddress, tokenId, fractionCount);
+        fractionDetails[address(fractionCollection)][tokenId] = OriginalNFT(_nftContractAddress, tokenId, fractionCount, tokenURI);
 
         //Emit a fractionalise event
-        emit fractionaliseEvent(msg.sender, _nftContractAddress, tokenId, fractionCount, address(fractionCollection));
+        emit fractionaliseEvent(msg.sender, _nftContractAddress, tokenId, fractionCount, address(fractionCollection), tokenURI);
     }
 
     // function upgradeNFTContract(address payable _newnftVaultContract) external onlyOwner{
