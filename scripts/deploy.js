@@ -8,22 +8,22 @@ const hre = require("hardhat");
 
 async function main() {
 
-  const NFTVault = await hre.ethers.getContractFactory("NftVault");
-  const nftVault = await NFTVault.deploy();
+  // const NFTVault = await hre.ethers.getContractFactory("NftVault");
+  // const nftVault = await NFTVault.deploy();
 
-  await nftVault.deployed();
+  // await nftVault.deployed();
 
-  console.log("NFT Vault is deployed to: ", nftVault.address);
+  // console.log("NFT Vault is deployed to: ", nftVault.address);
 
-  const FractionSale = await hre.ethers.getContractFactory("FractionSale");
-  const fractionSale = await FractionSale.deploy();
+  // const FractionSale = await hre.ethers.getContractFactory("FractionSale");
+  // const fractionSale = await FractionSale.deploy();
 
-  await fractionSale.deployed();
+  // await fractionSale.deployed();
 
-  console.log("Fraction Sale is deployed to: ", fractionSale.address);
+  // console.log("Fraction Sale is deployed to: ", fractionSale.address);
 
   const Fraction = await hre.ethers.getContractFactory("Fraction");
-  const fraction = await Fraction.deploy(fractionSale.address, nftVault.address);
+  const fraction = await Fraction.deploy();
 
   await fraction.deployed();
 
