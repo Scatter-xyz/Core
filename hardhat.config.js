@@ -13,5 +13,9 @@ module.exports = {
       url: process.env.RINKEBY_ALCHEMY_URL,
       accounts: [process.env.PRIVATE_KEY],
     },
+    mumbai: {
+      url: process.env.MUMBAI_ALCHEMY_URL,
+      accounts: [process.env.PRIVATE_KEY],
+    }
   }
 };

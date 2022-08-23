@@ -28,6 +28,13 @@ async function main() {
   await fraction.deployed();
 
   console.log("fraction is deployed to: ", fraction.address);
+
+  const Faucet = await hre.ethers.getContractFactory("Faucet");
+  const faucet = await Faucet.deploy();
+
+  await faucet.deployed();
+
+  console.log("faucet is deployed to: ", faucet.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
