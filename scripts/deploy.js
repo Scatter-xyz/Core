@@ -22,12 +22,12 @@ async function main() {
 
   // console.log("Fraction Sale is deployed to: ", fractionSale.address);
 
-  // const Fraction = await hre.ethers.getContractFactory("Fraction");
-  // const fraction = await Fraction.deploy();
+  const Fraction = await hre.ethers.getContractFactory("Fraction");
+  const fraction = await Fraction.deploy();
 
-  // await fraction.deployed();
+  await fraction.deployed();
 
-  // console.log("fraction is deployed to: ", fraction.address);
+  console.log("fraction is deployed to: ", fraction.address);
 
   const Faucet = await hre.ethers.getContractFactory("Faucet");
   const faucet = await Faucet.deploy();
